@@ -125,7 +125,7 @@ function renderInventory() {
   const total = inventory.reduce((a, i) => a + i.qty * i.precio.promedio, 0);
   $('#totals').innerHTML = `<div><span>Ítems</span>${inventory.length}</div><div><span>Unidades</span>${units}</div><div><span>Valor estimado</span>${money(total)}</div>`;
   $('#list').innerHTML = items.length ? items.map(i => `<div class="item" data-id="${i.id}">
-    ${i.thumb ? `<img src="${i.thumb}" alt="">` : '<img alt="" src="icons/icon-192.png">'}
+    ${i.thumb ? `<img src="${i.thumb}" alt="">` : '<img alt="" src="icon-192.png">'}
     <div class="info">
       <h3>${esc(i.nombre)}</h3>
       <div class="sub">${esc([i.marca, i.modelo, i.categoria].filter(Boolean).join(' · '))}${i.ubicacion ? ' · 📍' + esc(i.ubicacion) : ''}</div>
