@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>StockScan - Inventario de herramientas</title>
+<meta name="description" content="Inventario de herramientas con carga rápida y detallada. Funciona sin internet.">
+<meta name="theme-color" content="#f59e0b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="StockScan">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>📦 StockScan <small>Inventario</small></h1>
+  <div class="hbtns">
+    <button id="btn-install" class="ghost" hidden>⬇ Instalar</button>
+  </div>
+</header>
+
+<main>
+  <!-- CARGA -->
+  <section id="view-add" class="view active">
+    <div class="tabs">
+      <button data-tab="tab-quick" class="active">⚡ Rápida</button>
+      <button data-tab="tab-full">📝 Detallada</button>
+    </div>
+
+    <div id="tab-quick" class="tab active">
+      <p class="hint">Una herramienta por línea, campos separados por punto:<br>
+        <b>nombre.marca.modelo.precio.cantidad.ubicación.categoría</b><br>
+        Solo el nombre es obligatorio. Escribí el precio sin puntos (45000). Podés dejar campos vacíos: <i>Martillo..., 8500</i> → <i>Martillo...8500</i></p>
+      <textarea id="quick" rows="5" placeholder="Taladro percutor.Bosch.GSB 13 RE.85000.1.Taller.Eléctricas&#10;Martillo.Stanley.51-163.12000"></textarea>
+      <div id="quick-preview" class="hint"></div>
+      <button id="quick-save" class="primary">Agregar al inventario</button>
+    </div>
+
+    <div id="tab-full" class="tab" hidden>
+      <form id="form-full">
+        <h2 id="full-title">Nueva herramienta</h2>
+        <div class="grid">
+          <label class="full">Nombre *<input type="text" id="f-nombre" required></label>
+          <label>Marca<input type="text" id="f-marca"></label>
+          <label>Modelo<input type="text" id="f-modelo"></label>
+          <label>Categoría<input type="text" id="f-categoria" list="cats" placeholder="Ej: Eléctricas"></label>
+          <label>Nº de serie<input type="text" id="f-serie"></label>
+          <label>Precio c/u (ARS)<input type="number" id="f-precio" min="0" step="any" inputmode="decimal"></label>
+          <label>Cantidad<input type="number" id="f-qty" min="1" value="1"></label>
+          <label>Estado<select id="f-estado"><option>Nuevo</option><option>Usado</option><option>A reparar</option></select></label>
+          <label>Ubicación<input type="text" id="f-ubi" placeholder="Ej: Taller, estante 2"></label>
+          <label>Fecha de compra<input type="date" id="f-fecha"></label>
+          <label>Proveedor / tienda<input type="text" id="f-proveedor"></label>
+          <label class="full">Descripción / notas<textarea id="f-desc" rows="3"></textarea></label>
+          <label class="full">Especificaciones (una por línea, formato Clave: valor)<textarea id="f-specs" rows="3" placeholder="Potencia: 750 W&#10;Mandril: 13 mm"></textarea></label>
+        </div>
+        <datalist id="cats"></datalist>
+        <div class="actions">
+          <button type="button" id="f-cancel" class="ghost">Cancelar</button>
+          <button type="submit" class="primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- INVENTARIO -->
+  <section id="view-inv" class="view">
+    <div class="toolbar">
+      <input id="filter" type="search" placeholder="Buscar en inventario…">
+    </div>
+    <div id="totals" class="totals"></div>
+    <div id="list"></div>
+    <div class="toolbar">
+      <button id="btn-csv" class="ghost">Exportar CSV</button>
+      <button id="btn-json" class="ghost">Respaldo JSON</button>
+      <label class="ghost btn">Restaurar<input type="file" id="import" accept="application/json" hidden></label>
+    </div>
+  </section>
+</main>
+
+<nav>
+  <button data-view="view-add" class="active">➕ Cargar</button>
+  <button data-view="view-inv">🧰 Inventario <span id="count" class="badge">0</span></button>
+</nav>
+
+<div id="toast" class="toast" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>
